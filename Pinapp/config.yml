@@ -1,0 +1,9 @@
+world:
+   env: "Normal"
+   mat: "Obsidian"
+nether:
+   env: "Nether"
+   mat: 14
+skylands:
+   env: "Skylands"
+   mat: 57
