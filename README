@@ -1,0 +1,2 @@
+About:
+This plugin was created when I wasn't 100% happy with any portal plugin implementation, either they involved silly amounts of config, had expensive player listeners, or just didn't make sense. This plugin I feel provides (without portals) the ability to do custom warps to any world, and allows set "WARP" zones in a server, as well as giving players the freedom to create their own.
