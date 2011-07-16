@@ -1,0 +1,18 @@
+name: Pinapp
+version: 0.2
+author: codename_B
+website: http://ubempire.com/
+main: com.ubempire.pinapp.Pinapp
+commands:
+   warp:
+    description: warps the current player to the defined world
+    usage: |
+      /<command>
+   w:
+    description: warps the current player to the defined world
+    usage: |
+      /<command>
+   pinapp:
+    description: warps the current player to the defined world
+    usage: |
+      /<command>
