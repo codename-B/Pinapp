@@ -1,9 +1,20 @@
-world:
-   env: "Normal"
-   mat: "Obsidian"
-nether:
-   env: "Nether"
-   mat: 14
-skylands:
-   env: "Skylands"
-   mat: 57
+worlds:
+    world:
+        id: 15
+        seed: 1557195922
+        generator: Default
+        env: Normal
+    world2:
+        id: 14
+        seed: 1557195922
+        generator: Default
+        env: Normal
+    world3:
+        id: 16
+        seed: 1557195922
+        generator: Bananapocalypse
+        env: Normal
+    skylands:
+        id: 89
+        seed: 155719522
+        env: Skylands
