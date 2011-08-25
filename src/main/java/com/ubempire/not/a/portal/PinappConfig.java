@@ -62,7 +62,7 @@ public class PinappConfig {
 				String plugin = genSplit[0];
 				String args = "";
 				if (genSplit.length > 1)
-					args = genSplit[1];
+					args = generator.substring(generator.indexOf(":") + 1);
 				ChunkGenerator gen = jp.getServer().getPluginManager()
 						.getPlugin(plugin)
 						.getDefaultWorldGenerator(worldName, args);
