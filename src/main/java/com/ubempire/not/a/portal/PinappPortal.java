@@ -74,7 +74,7 @@ public class PinappPortal extends PlayerListener {
 		tp = block2.getRelative(2, 1, 0).getLocation();
 		if(orientation>1)
 			tp = block2.getRelative(0, 1, 2).getLocation();
-		player.setMaximumNoDamageTicks(2);
+		player.setNoDamageTicks(2);
 		player.teleport(tp);
 	}
 
