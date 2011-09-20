@@ -84,7 +84,7 @@ public class PinappConfig {
 			Pinapp.portalTypes.add(portalBlock);
 		}
 	}
-	public int getId(String world) {
+	public Integer getId(String world) {
 		return wbi.get(world);
 	}
 	public String getWorld(int id) {
