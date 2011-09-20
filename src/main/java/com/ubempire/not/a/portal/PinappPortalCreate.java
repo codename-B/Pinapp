@@ -48,7 +48,7 @@ class BlockWatch extends BlockListener {
 		if (event.getBlock().getTypeId() != 51)
 			return;
 		event.getBlock().setTypeId(0);
-		CheckBlock check = new CheckBlock(block);
+		CheckBlock check = new CheckBlock(p, block);
 		int orientation = check.check();
 		if (orientation == -1)
 			event.getBlock().setTypeId(51);
@@ -68,7 +68,7 @@ class BlockWatch extends BlockListener {
 				break;
 			}
 		}
-		CheckBlock b = new CheckBlock(block);
+		CheckBlock b = new CheckBlock(p, block);
 		int orientation = b.check();
 		if (orientation >= 0)
 			event.setCancelled(true);
@@ -84,7 +84,7 @@ class BlockWatch extends BlockListener {
 		if (!(player.hasPermission("pinapp.portal.create") || player.isOp()))
 			return;
 		event.getBlock().getRelative(0, 1, 0).setTypeId(0);
-		CheckBlock check = new CheckBlock(block);
+		CheckBlock check = new CheckBlock(p, block);
 		int orientation = check.check();
 		check.createPortal(orientation);
 		if (orientation == -1)
