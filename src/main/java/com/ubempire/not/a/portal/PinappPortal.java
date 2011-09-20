@@ -55,7 +55,7 @@ public class PinappPortal extends PlayerListener {
 				break;
 			}
 		}
-		CheckBlock b = new CheckBlock(block);
+		CheckBlock b = new CheckBlock(p, block);
 		int orientation = b.check();
 		int typeTo = block.getTypeId();
 		

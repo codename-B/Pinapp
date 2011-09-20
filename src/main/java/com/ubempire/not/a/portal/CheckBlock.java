@@ -6,8 +6,10 @@ import org.bukkit.block.Block;
 public class CheckBlock {
 	private Block block;
 	private int typeId;
+    private Pinapp p;
 
-	public CheckBlock(Block block) {
+	public CheckBlock(Pinapp p, Block block) {
+        this.p = p;
 		this.block = block;
 		this.typeId = block.getTypeId();
 	}
@@ -203,7 +205,7 @@ public class CheckBlock {
 	}
 
 	public int check() {
-		 if (!Pinapp.portalTypes.contains(block.getTypeId()))
+		 if (p.pc.getId(block.getWorld().getName()) == block.getTypeId() || !Pinapp.portalTypes.contains(block.getTypeId()))
 		 return -1;
 		if (
 		// Base check Z1
