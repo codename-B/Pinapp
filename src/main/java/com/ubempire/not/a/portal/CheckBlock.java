@@ -205,7 +205,7 @@ public class CheckBlock {
 	}
 
 	public int check() {
-		 if (p.pc.getId(block.getWorld().getName()) == null || !Pinapp.portalTypes.contains(block.getTypeId()))
+		 if (p.pc.getId(block.getWorld().getName()) == block.getTypeId() || !Pinapp.portalTypes.contains(block.getTypeId()))
 		 return -1;
 		if (
 		// Base check Z1
