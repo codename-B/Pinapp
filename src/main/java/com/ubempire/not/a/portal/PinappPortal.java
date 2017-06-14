@@ -5,14 +5,12 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
-import org.bukkit.event.Event.Priority;
-import org.bukkit.event.player.PlayerListener;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerPortalEvent;
 import org.bukkit.event.world.PortalCreateEvent;
-import org.bukkit.event.world.WorldListener;
 
-public class PinappPortal extends PlayerListener {
+public class PinappPortal implements Listener {
 	Pinapp p;
 
 	PinappPortal(Pinapp p) {
@@ -22,16 +20,15 @@ public class PinappPortal extends PlayerListener {
 	public void register() {
 		p.getServer()
 				.getPluginManager()
-				.registerEvent(Event.Type.PLAYER_PORTAL, this, Priority.Normal,
-						p);
+				.registerEvents(this, p);
 		p.getServer()
 				.getPluginManager()
-				.registerEvent(Event.Type.PORTAL_CREATE, new PinappWorld(),
-						Priority.Normal, p);
+				.registerEvents(new PinappWorld(), p);
 		p.log("Registered PLAYER_PORTAL and PORTAL_CREATE events successfully.");
 	}
 
 	@SuppressWarnings("unused")
+    @EventHandler
 	public void onPlayerPortal(PlayerPortalEvent event) {
 		if(event.isCancelled())
 			return;
@@ -80,8 +77,9 @@ public class PinappPortal extends PlayerListener {
 
 }
 
-class PinappWorld extends WorldListener {
+class PinappWorld implements Listener {
 
+    @EventHandler
 	public void onPortalCreate(PortalCreateEvent event) {
 		event.setCancelled(true);
 	}
