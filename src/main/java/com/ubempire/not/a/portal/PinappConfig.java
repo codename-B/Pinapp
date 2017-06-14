@@ -2,58 +2,62 @@ package com.ubempire.not.a.portal;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.World.Environment;
+import org.bukkit.WorldCreator;
+import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.generator.ChunkGenerator;
-import org.bukkit.util.config.Configuration;
 
 public class PinappConfig {
-	Configuration c;
 	Pinapp jp;
 	HashMap<Integer, String> ibw = new HashMap<Integer, String>();
 	HashMap<String, Integer> wbi = new HashMap<String, Integer>();
 
 	PinappConfig(Pinapp jp) {
 		this.jp = jp;
-		this.c = jp.getConfiguration();
 	}
 
 	public void setDefaults() {
-		List<String> keys = c.getKeys("worlds");
-		if (keys == null || keys.size() == 0) {
+        ConfigurationSection worldsSection = jp.getConfig().getConfigurationSection("worlds");
+        if (worldsSection == null) {
 			jp.log("No config found. Generating config file.");
 			World defaultWorld = jp.getServer().getWorlds().get(0);
 			String worldName = defaultWorld.getName();
-			c.setProperty("worlds." + worldName + ".generator", "Default");
-			c.setProperty("worlds." + worldName + ".id", 14);
-			c.setProperty("worlds." + worldName + ".env", "Normal");
-			c.setProperty("worlds." + worldName + ".seed", (int) defaultWorld.getSeed());
-			c.save();
+            jp.getConfig().set("worlds." + worldName + ".generator", "Default");
+            jp.getConfig().set("worlds." + worldName + ".id", 14);
+            jp.getConfig().set("worlds." + worldName + ".env", "Normal");
+            jp.getConfig().set("worlds." + worldName + ".seed", (int) defaultWorld.getSeed());
+			jp.saveConfig();
 		}
 	}
 
 	public void setup() {
 		jp.log("Loading config.");
-		List<String> keys = c.getKeys("worlds");
+        ConfigurationSection ws = jp.getConfig().getConfigurationSection("worlds");
+        if (ws == null) {
+            this.setDefaults();
+            ws = jp.getConfig().getConfigurationSection("worlds");
+        }
+		Set<String> keys = ws.getKeys(false);
 		for (String key : keys) {
 			// What is the gen?
-			String generator = c.getString("worlds." + key + ".generator",
-					"Default");
+			String generator = ws.getString(key + ".generator", "Default");
 			// What is the portal block?
-			int portalBlock = c.getInt("worlds." + key + ".id", 14);
+			int portalBlock = ws.getInt(key + ".id", 14);
 			// What is the seed?
-			long seed = (long) c.getInt("worlds." + key + ".seed", 0);
+			long seed = (long) ws.getInt(key + ".seed", 0);
 			// What is the env?
-			String environment = c
-					.getString("worlds." + key + ".env", "Normal");
+			String environment = ws.getString(key + ".env", "Normal");
 			// Setup the env variables
 			Environment env = Environment.NORMAL;
 			if (environment.equalsIgnoreCase("nether"))
 				env = Environment.NETHER;
-			if (environment.equalsIgnoreCase("skylands"))
-				env = Environment.SKYLANDS;
+			if (environment.equalsIgnoreCase("the_end"))
+				env = Environment.THE_END;
 			// Worldname?
 			String worldName = key;
 			// Is the gen other than default?
@@ -68,15 +72,19 @@ public class PinappConfig {
 						.getDefaultWorldGenerator(worldName, args);
 				jp.log("Creating world: "+worldName);
 				if(seed != 0)
-				jp.getServer().createWorld(worldName, env, seed, gen);
+				jp.getServer().createWorld(
+                        new WorldCreator(worldName).environment(env).seed(seed).generator(gen));
 				else
-				jp.getServer().createWorld(worldName, env, gen);
+				jp.getServer().createWorld(
+                        new WorldCreator(worldName).environment(env).generator(gen));
 			} else {
 				jp.log("Creating world: "+worldName);
 				if(seed != 0)
-				jp.getServer().createWorld(worldName, env, seed);
+				jp.getServer().createWorld(
+                        new WorldCreator(worldName).environment(env).seed(seed));
 				else
-				jp.getServer().createWorld(worldName, env);
+				jp.getServer().createWorld(
+                        new WorldCreator(worldName).environment(env));
 			}
 			// Then do the stuff to let us manage it :D
 			ibw.put(portalBlock, worldName);
